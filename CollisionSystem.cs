@@ -16,7 +16,7 @@ namespace CollisionSimulation
 
         public CollisionSystem (Particle[] particles)
         {
-            this.particles = (Particle []) particles.Clone(); //shallow copy, new array references the parameter
+            this.particles = (Particle []) particles.Clone(); //shallow copy, new array references the parameter !!!
         }
 
         public void predict(Particle a, double timeLimit)
@@ -30,6 +30,7 @@ namespace CollisionSimulation
                 if(currentTime + dt <= timeLimit)
                 {
                     pq.insertEvent(new Event(currentTime + dt, a, particles[i]));
+
                 }
             }
         }
