@@ -33,6 +33,19 @@ namespace CollisionSimulation
 
                 }
             }
+
+            //particle wall collisions
+            double dtX = a.timeToHitVertWall();
+            double dtY = a.timeToHitHorizontalWall();
+
+            if(currentTime + dtX <= timeLimit)
+            {
+                pq.insertEvent(new Event(currentTime + dtX, a, null));
+            }
+            if(currentTime + dtY <= timeLimit)
+            {
+                pq.insertEvent(new Event(currentTime + dtY, null, a));
+            }
         }
 
     }

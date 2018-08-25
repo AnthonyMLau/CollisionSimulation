@@ -8,8 +8,18 @@ namespace CollisionSimulation
 {
     class Event
     {
-        private Particle a;    //change to custom object
-        private Particle b;
+
+     /***************************************************************************
+
+     *    -  a and b both null:      redraw event
+     *    -  a null, b not null:     collision with vertical wall
+     *    -  a not null, b null:     collision with horizontal wall
+     *    -  a and b both not null:  binary collision between a and b
+     *
+     ***************************************************************************/
+
+        private Particle a, b;
+        private int countA, countB;
         public double time { get; private set; }
 
         
