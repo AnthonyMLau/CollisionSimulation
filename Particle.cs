@@ -8,19 +8,23 @@ namespace CollisionSimulation
 {
     class Particle
     {
-        private double centerX, centerY;
-        private double velX, velY;
-        private readonly double radius;
-        private readonly double mass;
-        private int count;
+        public double centerX { get; private set; }
+        public double centerY { get; private set; }
+        public double velX { get; private set; }
+        public double velY { get; private set; }
+        public double radius { get; private set; }
+        public  double mass { get; private set; }
+        public int count { get; private set; }
 
-        Random rand = new Random();
+        static Random rand = new Random();
+
+
 
         public Particle()
         {
-            this.centerX = rand.Next(0, 1);   //numbers are generated between 0 and 1, then multiplied to width of screen later
-            this.centerY = rand.Next(0, 1);
-            this.velX = rand.NextDouble() * (0.01) - 0.005;
+            this.centerX = rand.NextDouble();   //numbers are generated between 0 and 1, then multiplied to width of screen later
+            this.centerY = rand.NextDouble();
+            this.velX = rand.NextDouble() * (0.01) - 0.005;   //rand nums between -0.005 and 0.005
             this.velY = rand.NextDouble() * (0.01) - 0.005;
             this.radius = 20;
             this.mass = 5;
@@ -146,7 +150,9 @@ namespace CollisionSimulation
 
         public override string ToString()
         {
-            return ("cXY:" + centerX + ", " + centerY + "/t vXY: " + velX + ", " + velY + "/t Radius: "+ radius + "/t Mass: "+ mass);
+            return ("cXY:" + centerX + ", " + centerY + "\t vXY: " + velX + ", " + velY + "\t Radius: "+ radius + "\t Mass: "+ mass);
         }
+
+
     }
 }

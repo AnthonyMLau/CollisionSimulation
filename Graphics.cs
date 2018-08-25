@@ -13,31 +13,43 @@ namespace CollisionSimulation
     public partial class Graphics : Form
     {
 
-        int x = 0;
-        int y = 0;
-        Rectangle r;
-
+        Particle[] particles;
+        int windowHeight = 500;
+        int windowWidth = 500;
 
         public Graphics()
         {
             InitializeComponent();
 
+            particles = new Particle[10];
+            for (int i = 0; i < 10; i++)
+            {
+                particles[i] = new Particle();
+            }
+
         }
 
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            x += 1;
-            y += 1;
-            Invalidate();
-        }
 
         private void Graphics_Paint(object sender, PaintEventArgs e)
         {
-            r = new Rectangle(x, y, 20, 20);
-            e.Graphics.FillRectangle(Brushes.Red, r);
+            this.Height = windowHeight;
+            this.Width = windowWidth;
 
-            timer1.Interval = 100;
+            drawParticles(e);
+        }
+
+        public void drawParticles(PaintEventArgs e)
+        {
+            for (int i = 0; i < particles.Length; i++)
+            {
+                double x = (particles[i].centerX * windowWidth) - particles[i].radius;
+                double y = (particles[i].centerY * windowHeight) - particles[i].radius;
+                int size = (int)particles[i].radius * 2;
+
+
+                e.Graphics.FillRectangle(Brushes.Red, (int)x, (int)y, size, size);
+
+            }
         }
     }
 }
