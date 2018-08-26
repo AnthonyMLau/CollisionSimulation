@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CollisionSimulation
 {
-    class PriorityQueue //heap starts @ index of 1
+    public class PriorityQueue //heap starts @ index of 1
     {
         private Event[] pq = null;
         private int numItems = 0;

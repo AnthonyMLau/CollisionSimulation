@@ -6,32 +6,40 @@ using System.Threading.Tasks;
 
 namespace CollisionSimulation
 {
-    class Particle
+    public class Particle
     {
-        public double centerX { get; private set; }
-        public double centerY { get; private set; }
+        public int centerX { get; private set; }
+        public int centerY { get; private set; }
         public double velX { get; private set; }
         public double velY { get; private set; }
-        public double radius { get; private set; }
-        public  double mass { get; private set; }
+        public int radius { get; private set; }
+        public double mass { get; private set; }
         public int count { get; private set; }
+
+        public int windowWidth;
+        public int windowHeight;
 
         static Random rand = new Random();
 
 
 
-        public Particle()
+        public Particle(int windowHeight, int windowWidth)
         {
-            this.centerX = rand.NextDouble();   //numbers are generated between 0 and 1, then multiplied to width of screen later
-            this.centerY = rand.NextDouble();
-            this.velX = rand.NextDouble() * (0.01) - 0.005;   //rand nums between -0.005 and 0.005
-            this.velY = rand.NextDouble() * (0.01) - 0.005;
-            this.radius = 20;
+            this.radius = 7;
             this.mass = 5;
             this.count = 0;
+
+            this.windowHeight = windowHeight;
+            this.windowWidth = windowWidth;
+
+            this.centerX = rand.Next((int) radius+5, windowWidth-(int) radius-5);
+            this.centerY = rand.Next((int)radius + 5, windowWidth - (int)radius - 5);
+            this.velX = rand.Next(5,10);   
+            this.velY = rand.Next(5,10);
+
         }
 
-        public Particle(double centerX, double centerY, double velX, double velY, double radius, double mass)
+        public Particle(int centerX, int centerY, double velX, double velY, int radius, double mass)
         {
             this.centerX = centerX;
             this.centerY = centerY;
@@ -44,8 +52,8 @@ namespace CollisionSimulation
 
         public void move(double dt)
         {
-            centerX += velX * dt;
-            centerY += velY * dt;
+            centerX += (int)(velX * dt);
+            centerY += (int)(velY * dt);
         }
 
         public int getCount()
@@ -87,7 +95,7 @@ namespace CollisionSimulation
         //returns time for particle to hit vertical wall assuming no intervening collisions
         public double timeToHitVertWall()
         {
-            if (centerX > 0) return (1.0 - centerX - radius) / velX;
+            if (centerX > 0) return (windowWidth-centerX-radius) / velX;
             else if (centerX < 0) return (radius - centerX) / velX;
             else return double.PositiveInfinity;
         }
@@ -95,7 +103,7 @@ namespace CollisionSimulation
         //returns time for particle to hit horizontal wall assuming no intervening collisions
         public double timeToHitHorizontalWall()
         {
-            if (centerY > 0) return (1.0 - centerY - radius) / velY;
+            if (centerY > 0) return (windowWidth - centerX - radius) / velY;
             else if (centerY < 0) return (radius - centerY) / velY;
             else return double.PositiveInfinity;
         }

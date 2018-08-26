@@ -13,20 +13,38 @@ namespace CollisionSimulation
         /// </summary>
         [STAThread]
 
-        static void Main()
+        public static void Main()
         {
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Graphics());
 
 
-            Particle a = new Particle(1, 0, 10, 0, 1, 1);
-            Particle b = new Particle(20, 0, 5, 0, 1, 1);
-            Particle c = new Particle(40, 0, -10, 0, 1, 1);
 
-            Console.WriteLine(a.timeToHitVertWall());
-            Console.WriteLine(b.timeToHitVertWall());
-            Console.WriteLine(c.timeToHitVertWall());
+            Particle[] particles = new Particle[100];
+            for (int i = 0; i < 100; i++)
+            {
+                particles[i] = new Particle(500,500);
+                Console.WriteLine(particles[i]);
+            }
+            Console.WriteLine("=======================================================================");
+            CollisionSystem c = new CollisionSystem(particles, 500, 500);
+
+
+
+            Application.Run(c);
+
+
+
+
+
+
+
+
+
+
+
 
 
 

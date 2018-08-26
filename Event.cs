@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CollisionSimulation
 {
-    class Event
+    public class Event
     {
 
         /***************************************************************************
@@ -30,26 +30,37 @@ namespace CollisionSimulation
             this.b = b;
             this.time = time;
 
-            if (a != null) countA = a.getCount();
-            else countA = -1;
+            if (a != null)
+            {
+                countA = a.getCount();
+            }
+            else
+            {
+                countA = -1;
+            }
 
-            if (b != null) countA = b.getCount();
-            else countB = -1;
-
-
+            if (b != null)
+            {
+                countA = b.getCount();
+            }
+            else
+            {
+                countB = -1;
+            }
         }
 
-        public Event(double time)
-        {
-            this.time = time;
-            this.a = new Particle();
-            this.b = new Particle();
-        }
+        //public Event(double time)
+        //{
+        //    this.time = time;
+        //    this.a = new Particle();
+        //    this.b = new Particle();
+        //}
 
-        public Boolean isValid()
+        public Boolean isValid(double currentTime)
         {
-            if (a != null && a.getCount() != countA) return false;
-            if (b != null && b.getCount() != countB) return false;
+            if (time < currentTime) return false;
+            if (a != null && a.getCount() == countA) return true;
+            if (b != null && b.getCount() == countB) return true;
             return false; //lesson put as true??
         }
 
@@ -62,5 +73,7 @@ namespace CollisionSimulation
         {
             return b;
         }
+
+
     }
 }

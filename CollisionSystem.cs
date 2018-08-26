@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace CollisionSimulation
 {
-    class CollisionSystem
+    public class CollisionSystem: Graphics
     {
         private readonly static double hz = 0.5;
         public double currentTime { get; private set; }
         public PriorityQueue pq { get; private set; }
-        public Particle [] particles { get; private set; }
+        public Particle[] particles;// { get; private set; }
+
+        //Graphics g = new Graphics();
+        private int windowWidth, windowHeight;
 
 
-        public CollisionSystem (Particle[] particles)
+
+        public CollisionSystem (Particle[] particles, int windowWidth, int windowHeight)
         {
             this.particles = (Particle []) particles.Clone(); //shallow copy, new array references the parameter, does not create an extra copy
+            this.windowHeight = windowHeight;
+            this.windowWidth = windowWidth;
         }
 
 
@@ -41,7 +43,7 @@ namespace CollisionSimulation
             double dtX = a.timeToHitVertWall();
             double dtY = a.timeToHitHorizontalWall();
 
-            if(currentTime + dtX <= timeLimit)
+            if (currentTime + dtX <= timeLimit)
             {
                 pq.insertEvent(new Event(currentTime + dtX, a, null));  //vert wall
             }
@@ -55,20 +57,26 @@ namespace CollisionSimulation
 
 
         //simulates the particles for a given amount of time
-        public void simulate(double timeLimit, PaintEventArgs e)
+        public void simulate(double timeLimit)
         {
+            
+
             pq = new PriorityQueue();
             for (int i = 0; i < particles.Length; i++)
             {
                 predict(particles[i], timeLimit);
             }
 
+
+
             //main simulation loop
             while (pq.getNumItems() != 0)
             {
+
                 Event impendingEvent = pq.delMin();   //get impending event, discard if invalidated
-                if (!impendingEvent.isValid())
+                if (!impendingEvent.isValid(currentTime))
                 {
+                    System.Console.WriteLine(impendingEvent.time);
                     continue;
                 }
 
@@ -81,17 +89,51 @@ namespace CollisionSimulation
                 }
                 currentTime = impendingEvent.time;
 
+
                 //process events
                 if (a != null && b != null) a.bounceOff(b);
                 else if (a != null && b == null) a.bounceOffVertWall();
                 else if (a == null && b != null) b.bounceOffHorizontalWall();
                 //no null, null ??
 
-                
+
+
+                args.Graphics.Clear(Color.Gray);
+                drawParticles(particles);
+
+
 
                 // update the priority queue with new collisions involving a or b
                 predict(a, timeLimit);
                 predict(b, timeLimit);
+
+
+                
+            }   
+        }
+
+        public override void Graphics_Paint(object sender, PaintEventArgs e)
+        {
+            this.args = e;
+            this.Height = windowHeight;
+            this.Width = windowWidth;
+
+            e.Graphics.FillRectangle(Brushes.Green, 10, 10, 50, 50);
+
+            simulate(10000);
+        }
+
+        public void drawParticles(Particle[] particles)
+        {
+            Invalidate();
+            for (int i = 0; i < particles.Length; i++)
+            {
+                int x = particles[i].centerX - particles[i].radius;
+                int y = particles[i].centerY - particles[i].radius;
+                int size = (int)particles[i].radius * 2;
+
+                args.Graphics.FillEllipse(Brushes.Red, x, y, size, size);
+
             }
         }
 
