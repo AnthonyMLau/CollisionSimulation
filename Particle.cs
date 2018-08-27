@@ -22,7 +22,7 @@ namespace CollisionSimulation
         static Random rand = new Random();
 
 
-        public Particle(int windowHeight, int windowWidth)
+        public Particle(int windowWidth, int windowHeight)
         {
             this.radius = 7;
             this.mass = 5;
@@ -32,9 +32,9 @@ namespace CollisionSimulation
             this.windowWidth = windowWidth;
 
             this.centerX = rand.Next((int) radius+5, windowWidth-(int) radius-5);
-            this.centerY = rand.Next((int)radius + 5, windowWidth - (int)radius - 5);
-            this.velX = rand.Next(10,20);   
-            this.velY = rand.Next(10,20);
+            this.centerY = rand.Next((int)radius + 5, windowHeight - (int)radius - 5);
+            this.velX = rand.Next(0,0);   
+            this.velY = rand.Next(-50,50);
 
         }
 

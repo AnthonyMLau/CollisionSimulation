@@ -20,20 +20,22 @@ namespace CollisionSimulation
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            int num = 100;
+            int x = 1200;
+            int y = 900;
 
-
-            Particle[] particles = new Particle[100];
-            for (int i = 0; i < 100; i++)
+            Particle[] particles = new Particle[num];
+            for (int i = 0; i < num; i++)
             {
-                particles[i] = new Particle(500,500);
+                particles[i] = new Particle(x,y);
                 Console.WriteLine(particles[i]);
             }
             Console.WriteLine("=======================================================================");
-            CollisionSystem c = new CollisionSystem(particles, 500, 500);
+            CollisionSystem c = new CollisionSystem(particles, x, y);
 
-            Particle a = new Particle(20, 20, 1, 1, 10, 5);
-            Particle b = new Particle(22, 22, -1, -1, 10, 5);
-            Console.WriteLine(a.timeToHit(b)+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            //Particle a = new Particle(20, 20, 1, 1, 10, 5);
+            //Particle b = new Particle(22, 22, -1, -1, 10, 5);
+            //Console.WriteLine(a.timeToHit(b)+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 
             Application.Run(c);

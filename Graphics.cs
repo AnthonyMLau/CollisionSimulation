@@ -32,9 +32,6 @@ namespace CollisionSimulation
             this.args = e;
             args.Graphics.FillRectangle(Brushes.Blue, 10, 10, 50, 50);
 
-            
-            //s.simulate(10000);
-
         }
 
         public virtual void invalidate()
@@ -45,10 +42,10 @@ namespace CollisionSimulation
 
 
 
-        public void setWindowSize (int windowWidth, int windowHeight)
-        {
-            this.Width = windowWidth;
-            this.Height = windowHeight;
-        }
+        //public void setWindowSize (int windowWidth, int windowHeight)
+        //{
+        //    this.Width = windowWidth;
+        //    this.Height = windowHeight;
+        //}
     }
 }

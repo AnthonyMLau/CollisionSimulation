@@ -11,15 +11,15 @@ namespace CollisionSimulation
         public Particle[] particles;// { get; private set; }
 
         //Graphics g = new Graphics();
-        private int windowWidth, windowHeight;
+       
 
-        private Pen p = new Pen(Color.Red, 2);
+        private Pen p = new Pen(Color.Aqua, 2);
 
         public CollisionSystem (Particle[] particles, int windowWidth, int windowHeight)
         {
             this.particles = (Particle []) particles.Clone(); //shallow copy, new array references the parameter, does not create an extra copy
-            this.windowHeight = windowHeight;
-            this.windowWidth = windowWidth;
+            this.Height = windowHeight;
+            this.Width = windowWidth;
         }
 
 
@@ -38,10 +38,12 @@ namespace CollisionSimulation
                     pq.insertEvent(new Event(currentTime + dt, a, particles[i]));
                 }
             }
+            int sizeArr = pq.getArraySize();
 
             //particle wall collisions
             double dtX = a.timeToHitVertWall();
             double dtY = a.timeToHitHorizontalWall();
+
 
             if (currentTime + dtX <= timeLimit)
             {
@@ -59,8 +61,6 @@ namespace CollisionSimulation
         //simulates the particles for a given amount of time
         public void simulate(double timeLimit)
         {
-            
-
             pq = new PriorityQueue();
             for (int i = 0; i < particles.Length; i++)
             {
@@ -79,11 +79,12 @@ namespace CollisionSimulation
                     continue;
                 }
 
-                System.Console.WriteLine(impendingEvent.getParticleA());
-                System.Console.WriteLine(impendingEvent.getParticleB());
+                System.Console.WriteLine(impendingEvent.time);
 
                 Particle a = impendingEvent.getParticleA();
                 Particle b = impendingEvent.getParticleB();
+
+
 
                 for (int i = 0; i < particles.Length; i++)   // physical collision, so update positions and simulation clock
                 {
@@ -92,16 +93,24 @@ namespace CollisionSimulation
                 currentTime = impendingEvent.time;
 
 
+                args.Graphics.Clear(Color.Gray);
+                drawParticles(particles);
+
                 //process events
                 if (a != null && b != null) a.bounceOff(b);
-                else if (a != null && b == null) a.bounceOffVertWall();
-                else if (a == null && b != null) b.bounceOffHorizontalWall();
+                else if (a != null && b == null)
+                {
+                    a.bounceOffVertWall();
+                }
+                else if (b != null && a == null)
+                {
+                    b.bounceOffHorizontalWall();
+                }
                 //no null, null 
 
 
 
-                args.Graphics.Clear(Color.Transparent);
-                drawParticles(particles);
+
 
 
 
@@ -117,10 +126,7 @@ namespace CollisionSimulation
         public override void Graphics_Paint(object sender, PaintEventArgs e)
         {
             this.args = e;
-            //this.Height = windowHeight;
-            //this.Width = windowWidth;
-            this.Height = 1000;
-            this.Width = 1000;
+
 
             e.Graphics.DrawRectangle(p, 0, 0, 500, 500);
 
