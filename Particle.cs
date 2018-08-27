@@ -22,7 +22,6 @@ namespace CollisionSimulation
         static Random rand = new Random();
 
 
-
         public Particle(int windowHeight, int windowWidth)
         {
             this.radius = 7;
@@ -34,8 +33,8 @@ namespace CollisionSimulation
 
             this.centerX = rand.Next((int) radius+5, windowWidth-(int) radius-5);
             this.centerY = rand.Next((int)radius + 5, windowWidth - (int)radius - 5);
-            this.velX = rand.Next(5,10);   
-            this.velY = rand.Next(5,10);
+            this.velX = rand.Next(10,20);   
+            this.velY = rand.Next(10,20);
 
         }
 
@@ -84,7 +83,7 @@ namespace CollisionSimulation
             double sigma = this.radius + that.radius;
             double d = (dvdr * dvdr) - dvdv * (drdr - sigma * sigma);
 
-            // if (drdr < sigma*sigma) StdOut.println("overlapping particles");
+
             if (d < 0) return double.PositiveInfinity;
 
             return -(dvdr + Math.Sqrt(d)) / dvdv;
@@ -95,7 +94,7 @@ namespace CollisionSimulation
         //returns time for particle to hit vertical wall assuming no intervening collisions
         public double timeToHitVertWall()
         {
-            if (centerX > 0) return (windowWidth-centerX-radius) / velX;
+            if (velX > 0) return (windowWidth - centerX - radius) / velX;
             else if (centerX < 0) return (radius - centerX) / velX;
             else return double.PositiveInfinity;
         }
@@ -103,7 +102,7 @@ namespace CollisionSimulation
         //returns time for particle to hit horizontal wall assuming no intervening collisions
         public double timeToHitHorizontalWall()
         {
-            if (centerY > 0) return (windowWidth - centerX - radius) / velY;
+            if (velY > 0) return (windowHeight - centerY - radius) / velY;
             else if (centerY < 0) return (radius - centerY) / velY;
             else return double.PositiveInfinity;
         }
@@ -111,25 +110,44 @@ namespace CollisionSimulation
         //updates particle velocities of colliding particles using elastic collisions, instant collisions, no impulse/compression of particles
         public void bounceOff(Particle that)
         {
-            double dx = that.centerX - this.centerX;
-            double dy = that.centerY - this.centerY;
-            double dvx = that.velX - this.velX;
-            double dvy = that.velY - this.velY;
-            double dvdr = dx * dvx + dy * dvy;             // dv dot dr
-            double dist = this.radius + that.radius;   // distance between particle centers at collison
+            double massSum = this.mass + that.mass;
+            double massDiff = this.mass - that.mass;
 
-            //magnitude of normal force
-            double magnitude = 2 * this.mass * that.mass * dvdr / ((this.mass + that.mass) * dist);
+            double aXThis = massDiff / massSum * this.velX;
+            double bXThis = (2 * that.mass) / (massSum) * that.velX;
+            this.velX = aXThis + bXThis;
 
-            // normal force, and in x and y directions
-            double fx = magnitude * dx / dist;
-            double fy = magnitude * dy / dist;
+            double aYThis = massDiff / massSum * this.velY;
+            double bYThis = (2 * that.mass) / (massSum) * that.velY;
+            this.velY = aYThis + bYThis;
 
-            // update velocities according to normal force
-            this.velX += fx / this.mass;
-            this.velY += fy / this.mass;
-            that.velX -= fx / that.mass;
-            that.velY -= fy / that.mass;
+            double aXThat = (2 * this.mass) / (massSum) * this.velX;
+            double bXThat = (that.mass - this.mass) / massSum * that.velX;
+            that.velX = aXThat + bXThat;
+
+            double aYThat = (2 * this.mass) / (massSum) * this.velY;
+            double bYThat = (that.mass - this.mass) / massSum * that.velY;
+            that.velX = aYThat + bYThat;
+
+            //double dx = that.centerX - this.centerX;
+            //double dy = that.centerY - this.centerY;
+            //double dvx = that.velX - this.velX;
+            //double dvy = that.velY - this.velY;
+            //double dvdr = dx * dvx + dy * dvy;             // dv dot dr
+            //double dist = this.radius + that.radius;   // distance between particle centers at collison
+
+            ////magnitude of normal force
+            //double magnitude = 2 * this.mass * that.mass * dvdr / ((this.mass + that.mass) * dist);
+
+            //// normal force, and in x and y directions
+            //double fx = magnitude * dx / dist;
+            //double fy = magnitude * dy / dist;
+
+            //// update velocities according to normal force
+            //this.velX += fx / this.mass;
+            //this.velY += fy / this.mass;
+            //that.velX -= fx / that.mass;
+            //that.velY -= fy / that.mass;
 
             // update collision counts
             this.count++;

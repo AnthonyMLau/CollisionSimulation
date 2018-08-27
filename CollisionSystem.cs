@@ -13,7 +13,7 @@ namespace CollisionSimulation
         //Graphics g = new Graphics();
         private int windowWidth, windowHeight;
 
-
+        private Pen p = new Pen(Color.Red, 2);
 
         public CollisionSystem (Particle[] particles, int windowWidth, int windowHeight)
         {
@@ -32,10 +32,10 @@ namespace CollisionSimulation
             for (int i = 0; i < particles.Length; i++)
             {
                 double dt = a.timeToHit(particles[i]);
+
                 if(currentTime + dt <= timeLimit)
                 {
                     pq.insertEvent(new Event(currentTime + dt, a, particles[i]));
-
                 }
             }
 
@@ -76,9 +76,11 @@ namespace CollisionSimulation
                 Event impendingEvent = pq.delMin();   //get impending event, discard if invalidated
                 if (!impendingEvent.isValid(currentTime))
                 {
-                    System.Console.WriteLine(impendingEvent.time);
                     continue;
                 }
+
+                System.Console.WriteLine(impendingEvent.getParticleA());
+                System.Console.WriteLine(impendingEvent.getParticleB());
 
                 Particle a = impendingEvent.getParticleA();
                 Particle b = impendingEvent.getParticleB();
@@ -94,11 +96,11 @@ namespace CollisionSimulation
                 if (a != null && b != null) a.bounceOff(b);
                 else if (a != null && b == null) a.bounceOffVertWall();
                 else if (a == null && b != null) b.bounceOffHorizontalWall();
-                //no null, null ??
+                //no null, null 
 
 
 
-                args.Graphics.Clear(Color.Gray);
+                args.Graphics.Clear(Color.Transparent);
                 drawParticles(particles);
 
 
@@ -115,10 +117,12 @@ namespace CollisionSimulation
         public override void Graphics_Paint(object sender, PaintEventArgs e)
         {
             this.args = e;
-            this.Height = windowHeight;
-            this.Width = windowWidth;
+            //this.Height = windowHeight;
+            //this.Width = windowWidth;
+            this.Height = 1000;
+            this.Width = 1000;
 
-            e.Graphics.FillRectangle(Brushes.Green, 10, 10, 50, 50);
+            e.Graphics.DrawRectangle(p, 0, 0, 500, 500);
 
             simulate(10000);
         }
@@ -132,7 +136,7 @@ namespace CollisionSimulation
                 int y = particles[i].centerY - particles[i].radius;
                 int size = (int)particles[i].radius * 2;
 
-                args.Graphics.FillEllipse(Brushes.Red, x, y, size, size);
+                args.Graphics.DrawEllipse(p, x, y, size, size);
 
             }
         }

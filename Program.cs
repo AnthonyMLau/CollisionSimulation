@@ -31,6 +31,9 @@ namespace CollisionSimulation
             Console.WriteLine("=======================================================================");
             CollisionSystem c = new CollisionSystem(particles, 500, 500);
 
+            Particle a = new Particle(20, 20, 1, 1, 10, 5);
+            Particle b = new Particle(22, 22, -1, -1, 10, 5);
+            Console.WriteLine(a.timeToHit(b)+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 
             Application.Run(c);
