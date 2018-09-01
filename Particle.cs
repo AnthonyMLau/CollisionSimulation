@@ -33,7 +33,7 @@ namespace CollisionSimulation
 
             this.centerX = rand.Next((int) radius+5, windowWidth-(int) radius-5);
             this.centerY = rand.Next((int)radius + 5, windowHeight - (int)radius - 5);
-            this.velX = rand.Next(0,0);   
+            this.velX = rand.Next(-50,50);   
             this.velY = rand.Next(-50,50);
 
         }
