@@ -5,7 +5,7 @@ namespace CollisionSimulation
 {
     public class CollisionSystem: Graphics
     {
-        private readonly static double hz = 0.5;
+        //private readonly static double hz = 0.5;
         public double currentTime { get; private set; }
         public PriorityQueue pq { get; private set; }
         public Particle[] particles;// { get; private set; }
@@ -20,7 +20,7 @@ namespace CollisionSimulation
             this.particles = (Particle []) particles.Clone(); //shallow copy, new array references the parameter, does not create an extra copy
             this.Height = windowHeight;
             this.Width = windowWidth;
-        }
+        }   
 
 
 
@@ -108,28 +108,16 @@ namespace CollisionSimulation
                 }
                 //no null, null 
 
-
-
-
-
-
-
                 // update the priority queue with new collisions involving a or b
                 predict(a, timeLimit);
                 predict(b, timeLimit);
-
-
-                
             }   
         }
 
         public override void Graphics_Paint(object sender, PaintEventArgs e)
         {
             this.args = e;
-
-
             e.Graphics.DrawRectangle(p, 0, 0, 500, 500);
-
             simulate(10000);
         }
 

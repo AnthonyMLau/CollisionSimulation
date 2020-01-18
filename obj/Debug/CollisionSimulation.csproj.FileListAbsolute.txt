@@ -18,3 +18,13 @@ C:\Users\Anthony\Desktop\VS Projects\CollisionSimulation\CollisionSimulation\obj
 C:\Users\Anthony\Desktop\VS Projects\CollisionSimulation\CollisionSimulation\obj\Debug\CollisionSimulation.csproj.CoreCompileInputs.cache
 C:\Users\Anthony\Desktop\VS Projects\CollisionSimulation\CollisionSimulation\obj\Debug\CollisionSimulation.exe
 C:\Users\Anthony\Desktop\VS Projects\CollisionSimulation\CollisionSimulation\obj\Debug\CollisionSimulation.pdb
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\obj\Debug\CollisionSimulation.exe
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\obj\Debug\CollisionSimulation.pdb
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\bin\Debug\CollisionSimulation.exe.config
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\bin\Debug\CollisionSimulation.exe
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\bin\Debug\CollisionSimulation.pdb
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\obj\Debug\CollisionSimulation.csprojAssemblyReference.cache
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\obj\Debug\CollisionSimulation.Graphics.resources
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\obj\Debug\CollisionSimulation.Properties.Resources.resources
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\obj\Debug\CollisionSimulation.csproj.GenerateResource.cache
+C:\Users\AnthonyFlip\Documents\Work\CollisionSimulation\obj\Debug\CollisionSimulation.csproj.CoreCompileInputs.cache
